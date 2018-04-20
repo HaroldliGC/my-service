@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BegoniaService", "BegoniaService\BegoniaService.csproj", "{427DEEFD-3A91-4797-A513-927C70B49037}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{427DEEFD-3A91-4797-A513-927C70B49037}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{427DEEFD-3A91-4797-A513-927C70B49037}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{427DEEFD-3A91-4797-A513-927C70B49037}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{427DEEFD-3A91-4797-A513-927C70B49037}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2E2A7734-B142-47B0-B3F6-A9E43368423B}
+	EndGlobalSection
+EndGlobal
