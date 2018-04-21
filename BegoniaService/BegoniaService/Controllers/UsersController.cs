@@ -52,6 +52,7 @@ namespace BegoniaService.Controllers
             return Ok(user);
         }
 
+        [Authorize]
         public IQueryable<UserInf> GetReaderUserBySearch([FromUri] string Name, [FromUri] string AccountNumber)
         {
             if (Name == null)
@@ -118,39 +119,83 @@ namespace BegoniaService.Controllers
         // PUT: api/Users/5
         [Authorize]
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutUserState(int id, UserInf userInf)
+        public async Task<string> PutUserState(int id, UserInf userInf)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return "BadRequest";
             }
 
             if (id != userInf.Id)
             {
-                return BadRequest();
+                return "BadRequest";
             }
 
             User user = await db.Users.FindAsync(id);
-            user.State = userInf.State;
-            db.Entry(user).State = EntityState.Modified;
-
-            try
+            if (user.Identity == "user")
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
+                user.State = userInf.State;
+                db.Entry(user).State = EntityState.Modified;
+
+                try
+                {
+                    await db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UserExists(id))
+                    {
+                        return "NotFound";
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            } else
             {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return "you don't have authority";
+            }
+            return "change state success";
+        }
+
+        // PUT: api/Users/5
+        [Authorize]
+        [ResponseType(typeof(void))]
+        public async Task<string> PutUserResetPassword(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return "BadRequest(ModelState)";
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            User user = await db.Users.FindAsync(id);
+            
+            if (user.Identity == "user")
+            {
+                user.Password = user.License.Substring(user.License.Length - 6);
+                db.Entry(user).State = EntityState.Modified;
+
+                try
+                {
+                    await db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UserExists(id))
+                    {
+                        return "NotFound";
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            } else
+            {
+                return "you don't have authority";
+            }
+            return "Password reset success";
         }
 
         // POST: api/Users
@@ -161,6 +206,16 @@ namespace BegoniaService.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+            var temp = db.Users.Where(u => u.Account == user.Account);
+            if (temp.Any())
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            var temp2 = db.Users.Where(u => u.License == user.License);
+            if (temp2.Any())
+            {
+                return StatusCode(HttpStatusCode.Conflict);
             }
 
             db.Users.Add(user);

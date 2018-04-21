@@ -40,7 +40,7 @@ namespace BegoniaService.Controllers
         }
 
         //GET:api/Books/name
-
+        [Authorize]
         public IQueryable<Book> GetBookBySearch([FromUri] BookSearchInf bookSearchInf)
         {
             if (bookSearchInf.Name == null)
