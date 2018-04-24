@@ -154,5 +154,6 @@ namespace BegoniaService.Controllers
         {
             return db.Books.Count(e => e.Id == id) > 0;
         }
+
     }
 }

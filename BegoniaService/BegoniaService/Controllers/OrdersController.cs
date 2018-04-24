@@ -38,6 +38,25 @@ namespace BegoniaService.Controllers
             return Ok(order);
         }
 
+        // GET:
+        [Authorize]
+        [ResponseType(typeof(Order))]
+        public IQueryable<Order> GetBusinessOrderBySearch([FromUri] string UserName, [FromUri] string BookName)
+        {
+            if (UserName == null)
+            {
+                UserName = "";
+            }
+            if (BookName == null)
+            {
+                BookName = "";
+            }
+            var temp = db.Orders.Where(order => order.User.Name.Contains(UserName)).Include(b => b.Book).Include(b => b.User);
+            var rec = temp.Where(order => order.Book.Name.Contains(BookName)).Include(b => b.Book).Include(b => b.User);
+
+            return rec;
+        }
+
         // PUT: api/Orders/5
         [Authorize]
         [ResponseType(typeof(void))]

@@ -223,11 +223,16 @@
     <Compile Include="Controllers\BookImagesController.cs" />
     <Compile Include="Controllers\BookReviewsController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
+    <Compile Include="Controllers\BusinessController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Dots\BookSearchInf.cs" />
+    <Compile Include="Dots\LoginInf.cs" />
+    <Compile Include="Dots\OrderInf.cs" />
+    <Compile Include="Dots\OrderReturnMessage.cs" />
     <Compile Include="Dots\UserInf.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
