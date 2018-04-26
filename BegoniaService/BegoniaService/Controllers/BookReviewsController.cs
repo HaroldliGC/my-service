@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using BegoniaService.Models;
+using BegoniaService.Dots;
 
 namespace BegoniaService.Controllers
 {
@@ -22,6 +23,22 @@ namespace BegoniaService.Controllers
         public IQueryable<BookReview> GetBookReviews()
         {
             return db.BookReviews;
+        }
+
+        // GET: api/BookReviews
+        [Authorize]
+        public IQueryable<BookReviewsInf> GetBookReviewsByUser(int id)
+        {
+            //var temp = db.BookReviews.Where(b => b.BookId == id).Include(u => u.User);
+            var bookReviews = from b in db.BookReviews
+                              where b.BookId == id
+                              select new BookReviewsInf()
+                              {
+                                  UserName = b.User.Name,
+                                  Review = b.Review,
+                                  Date = b.Date
+                              };
+            return bookReviews;
         }
 
         // GET: api/BookReviews/5

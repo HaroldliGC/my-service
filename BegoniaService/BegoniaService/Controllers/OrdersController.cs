@@ -27,15 +27,31 @@ namespace BegoniaService.Controllers
         // GET: api/Orders/5
         [Authorize]
         [ResponseType(typeof(Order))]
-        public async Task<IHttpActionResult> GetOrder(int id)
+        public async Task<Order> GetOrder(int id)
         {
-            Order order = await db.Orders.FindAsync(id);
-            if (order == null)
-            {
-                return NotFound();
-            }
+            var temp = db.Orders.Where(b => b.Id == id).Include(b => b.Book).Include(b => b.User);
+            var order = temp.ToArray()[0];
+            return order;
+        }
 
-            return Ok(order);
+        // GET:
+        [Authorize]
+        [ResponseType(typeof(Order))]
+        public IQueryable<Order> GetUnreturnOrderByUserId([FromUri] int userId)
+        {
+            string renting = "renting";
+            var rec = db.Orders.Where(o => o.User.Id == userId && o.State == renting).Include(b => b.Book);
+            return rec;
+        }
+
+        // GET:
+        [Authorize]
+        [ResponseType(typeof(Order))]
+        public IQueryable<Order> GetReturnOrderByUserId([FromUri] int userId)
+        {
+            string renting = "renting";
+            var rec = db.Orders.Where(o => o.User.Id == userId && o.State != renting).Include(b => b.Book);
+            return rec;
         }
 
         // GET:

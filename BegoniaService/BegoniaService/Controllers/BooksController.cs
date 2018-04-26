@@ -25,6 +25,20 @@ namespace BegoniaService.Controllers
             return db.Books;
         }
 
+        // GET: api/Books
+        [Authorize]
+        [ResponseType(typeof(Book))]
+        public async Task<IHttpActionResult> GetBookByIsbn(string isbn)
+        {
+            var temp = db.Books.Where(b => b.Isbn == isbn);
+            if (!temp.Any())
+            {
+                return NotFound();
+            }
+            Book book = temp.ToArray()[0];
+            return Ok(book);
+        }
+
         // GET: api/Books/5
         [Authorize]
         [ResponseType(typeof(Book))]
@@ -38,6 +52,40 @@ namespace BegoniaService.Controllers
 
             return Ok(book);
         }
+
+        // GET: api/Books/5
+        [Authorize]
+        [ResponseType(typeof(BookInf))]
+        public async Task<IHttpActionResult> GetBookInf(int id)
+        {
+            Book book = await db.Books.FindAsync(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            var temp = db.BookImages.Where(i => i.BookId == id);
+            string imageUrl = "";
+            if (temp.Any())
+            {
+                imageUrl = temp.ToArray()[0].ImageURL;
+            }
+            BookInf bookInf = new BookInf()
+            {
+                Id = book.Id,
+                Name = book.Name,
+                Isbn = book.Isbn,
+                Type = book.Type,
+                Press = book.Press,
+                Price = book.Price,
+                Author = book.Author,
+                Info = book.Info,
+                Number = book.Number,
+                BorrowNumber = book.BorrowNumber,
+                ImageUrl = imageUrl
+            }; 
+            return Ok(bookInf);
+        }
+
 
         //GET:api/Books/name
         [Authorize]

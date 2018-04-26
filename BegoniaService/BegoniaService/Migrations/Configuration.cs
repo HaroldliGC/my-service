@@ -48,7 +48,7 @@
         new Book()
         {
             Id = 1,
-            Isbn = "978-7-115-39060-8",
+            Isbn = "9787115390608",
             Name = "JavaScripet函数式编程",
             Type = "计算机",
             Press = "人民邮电出版社",
@@ -61,7 +61,7 @@
         new Book()
         {
             Id = 2,
-            Isbn = "978-7-115-31008-8",
+            Isbn = "9787115310088",
             Name = "编写可维护的JavaScripet",
             Type = "计算机",
             Press = "人民邮电出版社",
@@ -74,7 +74,7 @@
         new Book()
         {
             Id = 3,
-            Isbn = "978-7-508-35594-8",
+            Isbn = "9787508355948",
             Name = "CSS权威指南",
             Type = "计算机",
             Press = "中国电力出版社",
@@ -87,7 +87,7 @@
         new Book()
         {
             Id = 4,
-            Isbn = "978-7-508-35594-9",
+            Isbn = "9787508355949",
             Name = "C#权威指南",
             Type = "计算机",
             Press = "中国电力出版社",
@@ -100,7 +100,7 @@
         new Book()
         {
             Id = 5,
-            Isbn = "978-7-121-27657-6",
+            Isbn = "9787121276576",
             Name = "ES6标准入门",
             Type = "计算机/Web开发/JavaScript",
             Press = "电子工业出版社",
