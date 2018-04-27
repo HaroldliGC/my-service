@@ -241,6 +241,7 @@
     <Compile Include="Dots\OrderInf.cs" />
     <Compile Include="Dots\OrderInfByUser.cs" />
     <Compile Include="Dots\OrderReturnMessage.cs" />
+    <Compile Include="Dots\UserByBorrow.cs" />
     <Compile Include="Dots\UserInf.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

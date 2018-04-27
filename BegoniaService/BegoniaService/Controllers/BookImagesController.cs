@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using BegoniaService.Dots;
 using BegoniaService.Models;
 
 namespace BegoniaService.Controllers
@@ -78,10 +79,10 @@ namespace BegoniaService.Controllers
 
         // POST: api/BookImages
         [Authorize]
-        public string PostBookImageByManager()
+        public async Task<object> PostBookImageByManager(int id)
         {
+            OrderReturnMessage rec = new OrderReturnMessage() { type = "failed", message="未检测到文件" };
             var file = HttpContext.Current.Request.Files.Count > 0 ? HttpContext.Current.Request.Files[0] : null;
-            string rec = "failed";
 
             if (file != null && file.ContentLength > 0)
             {
@@ -92,7 +93,28 @@ namespace BegoniaService.Controllers
                 fileName += Extent;
                 string path = Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/App_Data/uploads"), fileName);
                 file.SaveAs(path);
-                rec = "sucess";
+                var temp = db.BookImages.Where(b => b.BookId == id);
+                //当书籍封面不存在时
+                if (!temp.Any())
+                {
+                    int orderId = db.BookImages.Select(n => n.Id).ToList().Max() + 1;
+                    BookImage bookImage = new BookImage()
+                    {
+                        Id = orderId,
+                        BookId = id,
+                        ImageURL = path
+                    };
+                    db.BookImages.Add(bookImage);
+                }
+                else
+                {
+                    BookImage bookImage = temp.ToArray()[0];
+                    bookImage.ImageURL = path;
+                    db.Entry(bookImage).State = EntityState.Modified;
+                }
+                await db.SaveChangesAsync();
+                rec.type = "success";
+                rec.message = "书籍封面上传成功";
             }
             return rec;
         }
