@@ -171,7 +171,7 @@ namespace BegoniaService.Controllers
 
             User user = await db.Users.FindAsync(id);
             
-            if (user.Identity == "user")
+            if (user.Identity != "manager")
             {
                 user.Password = user.License.Substring(user.License.Length - 6);
                 db.Entry(user).State = EntityState.Modified;
