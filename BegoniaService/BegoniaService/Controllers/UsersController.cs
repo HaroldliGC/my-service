@@ -162,6 +162,47 @@ namespace BegoniaService.Controllers
         // PUT: api/Users/5
         [Authorize]
         [ResponseType(typeof(void))]
+        public async Task<string> PutUserInf(int id, UserInf userInf)
+        {
+            if (!ModelState.IsValid)
+            {
+                return "BadRequest";
+            }
+
+            if (id != userInf.Id)
+            {
+                return "BadRequest";
+            }
+
+            User user = await db.Users.FindAsync(id);
+            
+                user.Name = userInf.Name;
+                user.Phone = userInf.Phone;
+                user.Gender = userInf.Gender;
+                db.Entry(user).State = EntityState.Modified;
+
+                try
+                {
+                    await db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UserExists(id))
+                    {
+                        return "NotFound";
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+         
+            return "success";
+        }
+
+        // PUT: api/Users/5
+        [Authorize]
+        [ResponseType(typeof(void))]
         public async Task<string> PutUserResetPassword(int id)
         {
             if (!ModelState.IsValid)
