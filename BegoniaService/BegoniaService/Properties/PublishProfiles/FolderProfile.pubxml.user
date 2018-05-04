@@ -85,10 +85,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/14/2018 09:33:16</publishTime>
     </File>
     <File Include="bin/BegoniaService.dll">
-      <publishTime>05/03/2018 17:23:28</publishTime>
+      <publishTime>05/04/2018 09:19:03</publishTime>
     </File>
     <File Include="bin/BegoniaService.pdb">
-      <publishTime>05/03/2018 17:23:28</publishTime>
+      <publishTime>05/04/2018 09:19:03</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>03/02/2015 09:32:26</publishTime>

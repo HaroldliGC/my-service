@@ -19,7 +19,7 @@ namespace BegoniaService.Controllers
         private BegoniaServiceContext db = new BegoniaServiceContext();
 
         // GET: api/Books
-        [Authorize]
+        //[Authorize]
         public IQueryable<Book> GetBooks()
         {
             return db.Books;
